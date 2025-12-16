@@ -35,6 +35,13 @@ require("lazy").setup({
 
         -- import/override with your plugins
         { import = "plugins" },
+
+        -- Auto-close tags for HTML/React
+        {
+            "windwp/nvim-ts-autotag",
+            ft = { "html", "javascriptreact", "typescriptreact", "vue" },
+            config = true,
+        },
     },
     defaults = {
         lazy = false,
