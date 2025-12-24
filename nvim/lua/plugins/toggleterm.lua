@@ -21,6 +21,11 @@ return {
             desc = "󰊢 Terminal (Vertical)",
             noremap = true,
         },
+        {
+            "<leader>tn",
+            desc = "󰊢 New Terminal (Float)",
+            noremap = true,
+        },
     },
 
     opts = {
@@ -164,6 +169,36 @@ return {
         vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], {
             noremap = true,
             desc = "Exit terminal mode",
+        })
+
+        -- Counter for new terminals
+        local term_counter = 1
+
+        -- Function to open a new floating terminal
+        function _G.open_new_terminal()
+            term_counter = term_counter + 1
+            local new_term = Terminal:new({
+                cmd = vim.o.shell,
+                direction = "float",
+                float_opts = opts.float_opts,
+                on_open = function(term)
+                    vim.cmd("setlocal signcolumn=no")
+                    vim.cmd("setlocal foldcolumn=0")
+                    vim.wo.statusline = " %{b:term_title} "
+                end,
+                -- Use count to create a new terminal each time
+                count = term_counter
+            })
+            new_term:open()
+        end
+
+        -- Keymap for opening a new terminal
+        vim.keymap.set("n", "<leader>tn", function()
+            _G.open_new_terminal()
+        end, {
+            noremap = true,
+            silent = true,
+            desc = "New Floating Terminal",
         })
     end,
 }

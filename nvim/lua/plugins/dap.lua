@@ -14,7 +14,7 @@ return {
                 name = "Debug Main",
                 request = "launch",
                 mode = "debug",
-                program = "${fileDirname}",
+                program = "${workspaceFolder}",
                 cwd = "${fileDirname}",
             },
             {
